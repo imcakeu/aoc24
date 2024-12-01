@@ -77,7 +77,7 @@ void read_input_file(const string &filename, vector<int> &list_left, vector<int>
      file.close();
 }
 
-int main() {
+int main_partone() {
      // Example values
      /* vector<int> list_left = {3, 4, 2, 1, 3, 3};
      vector<int> list_right = {4, 3, 5, 3, 9, 3}; */
@@ -85,7 +85,7 @@ int main() {
      // Puzzle input:
      vector<int> list_left;
      vector<int> list_right;
-     string filename = "input_day1.txt";
+     string filename = "input.txt";
      read_input_file(filename, list_left, list_right);
 
      vector<int> sorted_list_left = list_left;
@@ -106,6 +106,42 @@ int main() {
      int sum = sum_array(distances);
 
      cout << "Sum of distances is: " << sum << endl;
+
+     return 0;
+}
+
+int similarity_score(vector<int> &left, vector<int> &right) {
+     int score = 0;
+     for(int i=0; i<left.size(); i++) {
+          int appearances = 0;
+          for(int j=0; j<right.size(); j++) {
+               if(left[i] == right[j]) {
+                    appearances += 1;
+               }
+          }
+
+          cout << "There are " << appearances << " appearances of " << left[i] << ": the similarity score is now " << score << "+" << left[i] << "*" << appearances << "=" << (score + (left[i] * appearances)) << endl;
+
+          score += left[i] * appearances;
+     }
+
+     return score;
+}
+
+int main() {
+     // Example values
+     /* vector<int> list_left = {3, 4, 2, 1, 3, 3};
+     vector<int> list_right = {4, 3, 5, 3, 9, 3}; */
+
+     // Puzzle input:
+     vector<int> list_left;
+     vector<int> list_right;
+     string filename = "input.txt";
+     read_input_file(filename, list_left, list_right);
+
+     int score = similarity_score(list_left, list_right);
+
+     cout << "Similarity score is: " << score << endl;
 
      return 0;
 }
